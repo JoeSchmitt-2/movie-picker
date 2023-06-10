@@ -1,11 +1,13 @@
 //By: Joseph Schmitt
 //Email: schmitttyy@gmail or jcs20fh@fsu.edu
 //Description: This is a movie picker app written using React!
+import { InputAdornment, Button, TextField } from '@mui/material';
 import './App.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { default as LocalMoviesIcon } from '@mui/icons-material/LocalMovies';
 
-function Movie() {
+export default function Movie() {
 
   //this state is used to store the value of the input
   const [query,setQuerys] = useState('');
@@ -59,6 +61,8 @@ const submitHandler = (e) => {
   e.preventDefault();
   setFinalQuery(query);
 }
+
+  
  
   return (
     <div className="App">
@@ -66,9 +70,25 @@ const submitHandler = (e) => {
       <h1>Movie Picker</h1>
 
       <form onSubmit={ submitHandler }>
-        <input type="text" value={ query } onChange={ onChangeHandler } />
-        <button type="submit">Sumbit</button>
+        <TextField 
+        InputProps={{ endAdornment: (
+          <InputAdornment>
+            <LocalMoviesIcon />
+          </InputAdornment> ),
+        }}
+        color='success'
+        autoComplete="on" 
+        helperText="Spider Man" 
+        size='small' 
+        label="Search" 
+        variant="filled"
+        value={ query } 
+        onChange={ onChangeHandler } 
+        />
+        <Button size='large' color='secondary' variant='contained' type="submit">Submit</Button>
       </form>
+
+      
   
     <div className="element">
       {container.map(( item, index ) => {
@@ -87,5 +107,3 @@ const submitHandler = (e) => {
     </div>
   );
 }
-
-export default Movie;
