@@ -1,7 +1,7 @@
 //By: Joseph Schmitt
 //Email: schmitttyy@gmail or jcs20fh@fsu.edu
 //Description: This is a movie picker app written using React!
-import { InputAdornment, Button, TextField } from '@mui/material';
+import { InputAdornment, Button, TextField, Stack } from '@mui/material';
 import './App.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
@@ -72,13 +72,13 @@ const submitHandler = (e) => {
       <form onSubmit={ submitHandler }>
         <TextField 
         InputProps={{ endAdornment: (
-          <InputAdornment>
+          <InputAdornment position='end'>
             <LocalMoviesIcon />
           </InputAdornment> ),
         }}
         color='success'
         autoComplete="on" 
-        helperText="Spider Man" 
+        helperText="Hint: Spider Man" 
         size='small' 
         label="Search" 
         variant="filled"
@@ -90,20 +90,18 @@ const submitHandler = (e) => {
 
       
   
-    <div className="element">
       {container.map(( item, index ) => {
         return (
-          <div key={index} className='element-div'> 
+          <Stack key={index} direction="row"> 
             <img src={ item.i.imageUrl } alt="" />
             <p>{ item.l }</p>
             <p>Actors: { item.s }</p>
             <p>{ item.qid }</p>
             <p>{ item.y }</p>
-          </div>
+          </Stack>
     
         );
       })}
-    </div>
     </div>
   );
 }
