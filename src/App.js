@@ -89,19 +89,20 @@ const submitHandler = (e) => {
       </form>
 
       
-  
-      {container.map(( item, index ) => {
-        return (
-          <Stack key={index} direction="row"> 
-            <img src={ item.i.imageUrl } alt="" />
-            <p>{ item.l }</p>
-            <p>Actors: { item.s }</p>
-            <p>{ item.qid }</p>
-            <p>{ item.y }</p>
-          </Stack>
-    
-        );
-      })}
+      <div className='element'>
+        {container.map(( item, index ) => {
+          return (
+            <Stack key={index} className='element-div'> 
+              <img src={ item.i.imageUrl } alt="" />
+              <p>{ item.l }</p>
+              <p>Actors: { item.s }</p>
+              <p>{ item.qid }</p>
+              <p>{ item.y }</p>
+            </Stack>
+      
+          );
+        })}
+      </div>
     </div>
   );
 }
