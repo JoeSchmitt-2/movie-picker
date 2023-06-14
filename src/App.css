@@ -1,12 +1,12 @@
 .font {
-  color: rgb(248, 245, 245);
+  color: white;
   font-size: 30px;
 }
 /*
 effects the entire page
 */
 body {
-  background-color: wheat;
+  background-color: darkgray;
 }
 
 .App {
@@ -31,12 +31,16 @@ effects the imdb images imageUrl
   height: 300px;
 }
 
+/*
+effects the movie cards
+*/
 .element-div {
-  border: 1px solid black;
+  border: 10px solid black;
   padding-top: 50px;
-  padding-right: 30px;
+  padding-right: 50px;
   padding-bottom: 50px;
-  padding-left: 80px;
+  padding-left: 50px;
+  color: white;
 }
 /*
 effects the text box

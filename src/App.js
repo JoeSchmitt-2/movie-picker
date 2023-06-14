@@ -1,11 +1,14 @@
 //By: Joseph Schmitt
 //Email: schmitttyy@gmail or jcs20fh@fsu.edu
 //Description: This is a movie picker app written using React!
-import { InputAdornment, Button, TextField } from '@mui/material';
+import { endAdornment, Button, TextField, InputAdornment } from '@mui/material';
 import './App.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { default as LocalMoviesIcon } from '@mui/icons-material/LocalMovies';
+import LocalPizzaIcon from '@mui/icons-material/LocalPizza';
+import { AutoCompleteFoods } from './components/AutoCompleteFoods';
+
+
 
 export default function Movie() {
 
@@ -15,22 +18,22 @@ export default function Movie() {
   //this state is used to store the data from the api
   const [container, setContainer] = useState([]);
 
-  //this takes the value of the input once submit is clicked and stores it in finalQuery
-  const [finalQuery, setFinalQuery] = useState('');
+  //this takes the value of the input once submit is clicked and stores it in endPoint
+  const [endPoint, setendPoint] = useState('');
 
-  //this calls fetchMe() when the state 'query->finalQuery', aka input, is changed
+  //this calls fetchMe() when the state 'query->endPoint', aka input, is changed
   useEffect(() => {
     fetchMe()
-  },[finalQuery])
+  },[endPoint])
 
   //fetching data from the api
   //back ticks are used to add the value of the state 'query' to the url
   const fetchMe = () =>{
-  fetch(`https://online-movie-database.p.rapidapi.com/auto-complete?q=+${query}`, {
-  "method": "GET",
-  "headers": {
-    "x-rapidapi-host": "online-movie-database.p.rapidapi.com",
-    "x-rapidapi-key": "70eb97ac5bmshb04b05b2e5ddfd6p1861c2jsn323041c6c66c"
+  fetch(`https://edamam-food-and-grocery-database.p.rapidapi.com/api/food-database/v2/parser?ingr=+${query}`, {
+  method: 'GET',
+  headers: {
+    'X-RapidAPI-Key': '70eb97ac5bmshb04b05b2e5ddfd6p1861c2jsn323041c6c66c',
+    'X-RapidAPI-Host': 'edamam-food-and-grocery-database.p.rapidapi.com'
   }
 })
 
@@ -40,7 +43,7 @@ export default function Movie() {
 })
 //data is all of the elements from the api being stored in the state 'container'
 .then(data => {
-  setContainer(data.d)
+  setContainer(data.hints)
 })
 //error catching
 .catch(err => {
@@ -55,11 +58,11 @@ const onChangeHandler = (e) => {
 }
 
 //allows the submit button to work
-//setFinalQuery having endpoint as a parameter allows us to use the value of endpoint once the 
-//button is clicked and used as the value for finalQuery which is set by setFinalQuery
+//setendPoint having endpoint as a parameter allows us to use the value of endpoint once the 
+//button is clicked and used as the value for endPoint which is set by setendPoint
 const submitHandler = (e) => {
   e.preventDefault();
-  setFinalQuery(query);
+  setendPoint(query);
 }
 
   
@@ -67,18 +70,18 @@ const submitHandler = (e) => {
   return (
     <div className="App">
       
-      <h1>Movie Picker</h1>
+      <h1>Food Picker</h1>
 
       <form onSubmit={ submitHandler }>
-        <TextField 
+        <TextField
         InputProps={{ endAdornment: (
-          <InputAdornment>
-            <LocalMoviesIcon />
-          </InputAdornment> ),
-        }}
+          <InputAdornment position="end">
+            <LocalPizzaIcon />
+          </InputAdornment>
+        ), }}
         color='success'
         autoComplete="on" 
-        helperText="Spider Man" 
+        helperText="Hint: Pizza" 
         size='small' 
         label="Search" 
         variant="filled"
@@ -87,20 +90,15 @@ const submitHandler = (e) => {
         />
         <Button size='large' color='secondary' variant='contained' type="submit">Submit</Button>
       </form>
-
-      
-  
+      <AutoCompleteFoods />
+ 
     <div className="element">
-      {container.map(( item, index ) => {
+      {container.map(( item ) => {
         return (
-          <div key={index} className='element-div'> 
-            <img src={ item.i.imageUrl } alt="" />
-            <p>{ item.l }</p>
-            <p>Actors: { item.s }</p>
-            <p>{ item.qid }</p>
-            <p>{ item.y }</p>
+          <div className="element-div"> 
+            <img src={item.food.image} alt="" />
+            <p>{ item.food.label }</p>
           </div>
-    
         );
       })}
     </div>
