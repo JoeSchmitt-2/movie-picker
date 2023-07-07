@@ -1,12 +1,6 @@
 .font {
-  color: rgb(248, 245, 245);
+  color: white;
   font-size: 30px;
-}
-/*
-effects the entire page
-*/
-body {
-  background-color: wheat;
 }
 
 .App {
@@ -23,21 +17,13 @@ body {
   justify-content: center;
   flex-direction: column;
 }
-/*
-effects the imdb images imageUrl
-*/
-.element img {
-  width: 300px;
-  height: 300px;
+
+img {
+  width: 150px;
+  height: 150px;
+  vertical-align: middle;
 }
 
-.element-div {
-  border: 1px solid black;
-  padding-top: 50px;
-  padding-right: 30px;
-  padding-bottom: 50px;
-  padding-left: 80px;
-}
 /*
 effects the text box
 */
@@ -57,4 +43,62 @@ button {
   border-radius: 5px;
   cursor: pointer;
 }
+body {
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;
+  min-height: 100vh;
+}
 
+#root{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+header,
+nav,
+main,
+aside,
+footer {
+  padding: 12px;
+  text-align: center;
+}
+
+header {
+  background-color: tomato;
+  height: 60px;
+  font-size: 30px
+}
+
+.columns{
+  display: flex;
+  flex-grow: 1;
+}
+
+nav {
+  background-color: coral;
+  width: 100px;
+  flex-shrink: 0;
+}
+
+main {
+  background-color: moccasin;
+  flex-grow: 1;
+}
+
+aside {
+  background-color: sandybrown;
+  width: 100px;
+  flex-shrink: 0;
+}
+
+footer {
+  background-color: slategray;
+  height: 100px;
+}
