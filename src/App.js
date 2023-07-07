@@ -1,13 +1,11 @@
 //By: Joseph Schmitt
 //Email: schmitttyy@gmail or jcs20fh@fsu.edu
 //Description: This is a movie picker app written using React!
-import { endAdornment, Button, TextField, InputAdornment } from '@mui/material';
+import { Button, TextField, InputAdornment, Stack } from '@mui/material';
 import './App.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import LocalPizzaIcon from '@mui/icons-material/LocalPizza';
-import { AutoCompleteFoods } from './components/AutoCompleteFoods';
-
+import TheaterComedyIcon from '@mui/icons-material/TheaterComedy';
 
 
 export default function Movie() {
@@ -19,7 +17,7 @@ export default function Movie() {
   const [container, setContainer] = useState([]);
 
   //this takes the value of the input once submit is clicked and stores it in endPoint
-  const [endPoint, setendPoint] = useState('');
+  const [endPoint, setEndPoint] = useState('');
 
   //this calls fetchMe() when the state 'query->endPoint', aka input, is changed
   useEffect(() => {
@@ -29,21 +27,22 @@ export default function Movie() {
   //fetching data from the api
   //back ticks are used to add the value of the state 'query' to the url
   const fetchMe = () =>{
-  fetch(`https://edamam-food-and-grocery-database.p.rapidapi.com/api/food-database/v2/parser?ingr=+${query}`, {
+  fetch(`https://online-movie-database.p.rapidapi.com/auto-complete?q=+${query}`, {
   method: 'GET',
   headers: {
     'X-RapidAPI-Key': '70eb97ac5bmshb04b05b2e5ddfd6p1861c2jsn323041c6c66c',
-    'X-RapidAPI-Host': 'edamam-food-and-grocery-database.p.rapidapi.com'
+		'X-RapidAPI-Host': 'online-movie-database.p.rapidapi.com'
   }
 })
 
 //adding .json() returns a promise
 .then(response => {
+  //console.log(response.json());
   return response.json();
 })
 //data is all of the elements from the api being stored in the state 'container'
 .then(data => {
-  setContainer(data.hints)
+  setContainer(data.d)
 })
 //error catching
 .catch(err => {
@@ -58,50 +57,55 @@ const onChangeHandler = (e) => {
 }
 
 //allows the submit button to work
-//setendPoint having endpoint as a parameter allows us to use the value of endpoint once the 
-//button is clicked and used as the value for endPoint which is set by setendPoint
+//setEndPoint having endpoint as a parameter allows us to use the value of endpoint once the 
+//button is clicked and used as the value for endPoint which is set by setEndPoint
 const submitHandler = (e) => {
   e.preventDefault();
-  setendPoint(query);
+  setEndPoint(query);
 }
 
   
  
   return (
-    <div className="App">
-      
-      <h1>Food Picker</h1>
+    <>
+      <header>Movie Picker</header>
+      <div className='columns'>
+        <nav>Left Advertisement Space</nav>
+          <main>
+            <form onSubmit={ submitHandler }>
+            <TextField
+            InputProps={{ endAdornment: (
+              <InputAdornment position='end'>
+                <TheaterComedyIcon />
+              </InputAdornment>
+            ), }}
+            color='success'
+            autoComplete="on" 
+            helperText="Hint: Doctor Who" 
+            size='small' 
+            label="Search" 
+            variant="filled"
+            value={ query } 
+            onChange={ onChangeHandler } 
+            />
+            <Button size='large' color='secondary' variant='contained' type="submit">Submit</Button>
+          </form>
+          {/*<AutoCompleteFoods />*/}
 
-      <form onSubmit={ submitHandler }>
-        <TextField
-        InputProps={{ endAdornment: (
-          <InputAdornment position="end">
-            <LocalPizzaIcon />
-          </InputAdornment>
-        ), }}
-        color='success'
-        autoComplete="on" 
-        helperText="Hint: Pizza" 
-        size='small' 
-        label="Search" 
-        variant="filled"
-        value={ query } 
-        onChange={ onChangeHandler } 
-        />
-        <Button size='large' color='secondary' variant='contained' type="submit">Submit</Button>
-      </form>
-      <AutoCompleteFoods />
- 
-    <div className="element">
-      {container.map(( item ) => {
-        return (
-          <div className="element-div"> 
-            <img src={item.food.image} alt="" />
-            <p>{ item.food.label }</p>
-          </div>
-        );
-      })}
+          {container.map(( item, index ) => {
+            return (
+              <Stack key={index} className='element'>
+                <img src={ item.i.imageUrl } alt="" className='img'/>
+                <p>{ item.l }</p>
+                <p>Actors: { item.s }</p>
+                <p>{ item.y }</p>
+              </Stack>
+            );
+          })}
+          </main>
+        <aside>Right Advertisement Space</aside>
     </div>
-    </div>
+    <footer>By Joseph Schmitt</footer>
+    </>
   );
 }
